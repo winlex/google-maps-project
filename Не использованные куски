@@ -1,0 +1,33 @@
+findXY
+    //Находим уравнение стороны и получаем коэффициенты 
+    let kofA = B.lng - A.lng;
+    let kofB = A.lat - B.lat;
+    let kofC = A.lng * A.lat - B.lng * A.lat + B.lat * A.lng - A.lat * A.lng;
+    //console.log(kofA);
+    //console.log(kofB);
+    //console.log(kofC);
+
+    //Находим уравнение высоты к стороне и получаем коэффициенты 
+    let kofA_ = kofB;
+    let kofB_ = -kofA;
+    let kofC_ = kofA * C.lng - kofB * C.lat;
+    //console.log(kofA_);
+    //console.log(kofB_);
+    //console.log(kofC_);
+
+    //Получаем систему линейных уравнений и решаем ее
+    let y = (kofC * kofA_ - kofC_ * kofA) / (kofB_ * kofA - kofB * kofA_);
+    let x = (-kofC - kofB * y) / kofA;
+
+findAngle
+    //Находим угловые коэффициенты
+      let kAB = (B.lng - A.lng) / (B.lat - A.lat);
+      let kBC = (C.lng - B.lng) / (C.lat - B.lat);
+      let kCA = (A.lng - C.lng) / (A.lat - C.lat);
+
+      //Находим углы сами
+      return {
+        A: Math.atan((kCA - kAB) / (1 + kCA * kAB)) * 180 / Math.PI,
+        B: Math.atan((kAB - kBC) / (1 + kAB * kBC)) * 180 / Math.PI,
+        C: Math.atan((kCA - kBC) / (1 + kCA * kBC)) * 180 / Math.PI
+      }
